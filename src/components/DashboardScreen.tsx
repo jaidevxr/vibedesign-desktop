@@ -51,16 +51,16 @@ const DashboardScreen = ({ mood, onNavigate }: Props) => {
   }, [score, streak, mood]);
 
   return (
-    <div className="gradient-calm relative flex h-[100dvh] flex-col overflow-y-auto overflow-x-hidden">
+    <div className="gradient-calm relative flex h-[100dvh] flex-col overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-20 -right-20 h-60 w-60 rounded-full bg-peach/25 blur-3xl" />
         <div className="absolute top-1/3 -left-16 h-40 w-40 rounded-full bg-sage/20 blur-2xl" />
         <div className="absolute bottom-20 right-0 h-32 w-32 rounded-full bg-primary/8 blur-2xl animate-breathe" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-4 sm:px-5 pb-6 sm:pb-8 pt-10 sm:pt-14">
+      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-10 sm:pt-14 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6 animate-fade-up">
+        <div className="flex items-center justify-between mb-4 px-4 sm:px-5 shrink-0 animate-fade-up">
           <div>
             <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground/70">{greeting}</p>
             <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">{userName}'s Dashboard</h1>
@@ -75,8 +75,10 @@ const DashboardScreen = ({ mood, onNavigate }: Props) => {
           </div>
         </div>
 
-        {/* Energy Score Card */}
-        <div className="glass-strong rounded-[1.75rem] p-6 mb-5 animate-fade-up border-primary/10 shadow-xl shadow-primary/5 cursor-pointer transition-all duration-300 active:scale-[0.98] hover:shadow-2xl" onClick={() => onNavigate("stats")} style={{ animationDelay: "0.1s" }}>
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto px-4 sm:px-5 pb-2">
+          {/* Energy Score Card */}
+          <div className="glass-strong rounded-[1.75rem] p-6 mb-5 animate-fade-up border-primary/10 shadow-xl shadow-primary/5 cursor-pointer transition-all duration-300 active:scale-[0.98] hover:shadow-2xl" onClick={() => onNavigate("stats")} style={{ animationDelay: "0.1s" }}>
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Zap size={14} className="text-primary" />
@@ -186,8 +188,11 @@ const DashboardScreen = ({ mood, onNavigate }: Props) => {
             </button>
           </div>
         </div>
+        </div>
 
-        <BottomNav currentScreen="dashboard" onNavigate={onNavigate as any} />
+        <div className="px-4 sm:px-5 shrink-0 mt-2">
+          <BottomNav currentScreen="dashboard" onNavigate={onNavigate as any} />
+        </div>
       </div>
     </div>
   );

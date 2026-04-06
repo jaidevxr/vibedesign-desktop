@@ -44,13 +44,15 @@ const ProfileScreen = ({ onNavigate }: Props) => {
   };
 
   return (
-    <div className="gradient-calm relative flex h-[100dvh] flex-col overflow-y-auto overflow-x-hidden">
+    <div className="gradient-calm relative flex h-[100dvh] flex-col overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute top-0 right-0 h-48 w-48 rounded-full bg-peach/20 blur-3xl animate-float" />
         <div className="absolute bottom-40 left-0 h-40 w-40 rounded-full bg-primary/10 blur-2xl animate-breathe" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-5 pb-8 pt-14">
+      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-10 sm:pt-14 overflow-hidden">
+        {/* Scrollable Container */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-5 pb-2">
         {/* Avatar + Name */}
         <div className="flex flex-col items-center mb-8 animate-fade-up">
           <div className="relative mb-4">
@@ -177,8 +179,9 @@ const ProfileScreen = ({ onNavigate }: Props) => {
             </div>
           </div>
         )}
+        </div>
 
-        <div className="mt-auto pt-4">
+        <div className="px-4 sm:px-5 shrink-0 mt-2">
           <BottomNav currentScreen="profile" onNavigate={onNavigate} />
         </div>
       </div>

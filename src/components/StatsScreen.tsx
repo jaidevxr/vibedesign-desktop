@@ -49,20 +49,22 @@ const StatsScreen = ({ onNavigate }: Props) => {
   const hasData = sessions.length > 0 || moodData.length > 0;
 
   return (
-    <div className="gradient-calm relative flex h-[100dvh] flex-col overflow-y-auto overflow-x-hidden">
+    <div className="gradient-calm relative flex h-[100dvh] flex-col overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute top-10 -left-10 h-60 w-60 rounded-full bg-peach/25 blur-3xl animate-float-slow" />
         <div className="absolute top-1/2 right-0 h-40 w-40 rounded-full bg-sage/20 blur-2xl animate-float" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-4 sm:px-5 pb-6 sm:pb-8 pt-10 sm:pt-14">
-        <div className="mb-6 animate-fade-up">
+      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-10 sm:pt-14 overflow-hidden">
+        <div className="mb-6 px-4 sm:px-5 shrink-0 animate-fade-up">
           <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground/70">Insights</p>
           <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">Your Trends</h1>
         </div>
 
-        {/* Tabs */}
-        <div className="glass-strong flex rounded-2xl p-1.5 mb-5 animate-fade-up shrink-0" style={{ animationDelay: "0.1s" }}>
+        {/* Scrollable Container */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-5 pb-2">
+          {/* Tabs */}
+          <div className="glass-strong flex rounded-2xl p-1.5 mb-5 animate-fade-up shrink-0" style={{ animationDelay: "0.1s" }}>
           {(["energy", "sessions", "mood"] as const).map((tab) => (
             <button key={tab} onClick={() => setActiveTab(tab)} className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold transition-all duration-300 ${activeTab === tab ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:bg-white/10"}`}>
               <span className="capitalize">{tab}</span>
@@ -154,8 +156,11 @@ const StatsScreen = ({ onNavigate }: Props) => {
             </div>
           </>
         )}
+        </div>
 
-        <BottomNav currentScreen="stats" onNavigate={onNavigate} />
+        <div className="px-4 sm:px-5 shrink-0 mt-2">
+          <BottomNav currentScreen="stats" onNavigate={onNavigate} />
+        </div>
       </div>
     </div>
   );

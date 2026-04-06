@@ -143,9 +143,9 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
         <div className="absolute bottom-32 left-4 h-20 w-20 rounded-full bg-sage/15 blur-xl animate-float" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-4 sm:px-5 pb-3 sm:pb-4 pt-10 sm:pt-14">
+      <div className="relative z-10 flex flex-1 flex-col px-4 sm:px-5 pb-3 sm:pb-4 pt-10 sm:pt-14 min-h-0">
         {/* Header */}
-        <div className="mb-3 animate-fade-up flex items-center justify-between">
+        <div className="mb-3 animate-fade-up flex items-center justify-between shrink-0">
           <button onClick={onBack} className="glass-subtle inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-all duration-300 active:scale-95 hover:bg-white/50">
             <ChevronLeft size={14} strokeWidth={2} />
             Back
@@ -161,7 +161,7 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
           )}
         </div>
 
-        <div className="flex items-center gap-2.5 mb-3">
+        <div className="flex items-center gap-2.5 mb-3 shrink-0">
           <h1 className="font-heading text-xl text-foreground">Your Session</h1>
           {messages.length > 0 && (
             <span className="text-[10px] text-muted-foreground font-mono glass-subtle rounded-full px-2.5 py-0.5 tabular-nums">
