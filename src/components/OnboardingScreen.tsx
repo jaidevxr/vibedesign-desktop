@@ -33,7 +33,7 @@ const OnboardingScreen = ({ onComplete }: Props) => {
         <div className="absolute bottom-44 right-12 h-20 w-20 rounded-full bg-primary/10 blur-2xl animate-breathe" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-6 pb-8 pt-14">
+      <div className="relative z-10 flex flex-1 flex-col px-6 pb-8 pt-14 overflow-y-auto chat-scroll">
         {/* Progress dots */}
         <div className="flex items-center justify-center gap-2 mb-8">
           {[0, 1, 2].map((i) => (
