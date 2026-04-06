@@ -55,7 +55,7 @@ const StatsScreen = ({ onNavigate }: Props) => {
         <div className="absolute top-1/2 right-0 h-40 w-40 rounded-full bg-sage/20 blur-2xl animate-float" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-5 pb-8 pt-14">
+      <div className="relative z-10 flex flex-1 flex-col px-4 sm:px-5 pb-6 sm:pb-8 pt-10 sm:pt-14">
         <div className="mb-6 animate-fade-up">
           <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground/70">Insights</p>
           <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">Your Trends</h1>

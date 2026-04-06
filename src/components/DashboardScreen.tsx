@@ -58,7 +58,7 @@ const DashboardScreen = ({ mood, onNavigate }: Props) => {
         <div className="absolute bottom-20 right-0 h-32 w-32 rounded-full bg-primary/8 blur-2xl animate-breathe" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-5 pb-8 pt-14">
+      <div className="relative z-10 flex flex-1 flex-col px-4 sm:px-5 pb-6 sm:pb-8 pt-10 sm:pt-14">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 animate-fade-up">
           <div>

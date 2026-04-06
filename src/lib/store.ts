@@ -23,6 +23,7 @@ export interface UserPreferences {
   reminders: boolean;
   sleepTracking: boolean;
   aiVoiceType: string;
+  theme: "light" | "dark" | "system";
 }
 
 interface StoreData {
@@ -40,6 +41,7 @@ const defaultPrefs: UserPreferences = {
   reminders: true,
   sleepTracking: true,
   aiVoiceType: "Calm & Natural",
+  theme: "light",
 };
 
 const defaultData: StoreData = {

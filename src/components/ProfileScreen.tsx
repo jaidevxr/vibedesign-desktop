@@ -17,10 +17,17 @@ const ProfileScreen = ({ onNavigate }: Props) => {
   const streak = getCurrentStreak();
   const totalMinutes = getTotalMinutes();
 
-  const toggle = (key: "reminders" | "sleepTracking") => {
-    const newVal = !prefs[key];
-    setPreferences({ [key]: newVal });
-    setLocalPrefs({ ...prefs, [key]: newVal });
+  const toggle = (key: "reminders" | "theme") => {
+    if (key === "theme") {
+      const newTheme = prefs.theme === "dark" ? "light" : "dark";
+      setPreferences({ theme: newTheme });
+      setLocalPrefs({ ...prefs, theme: newTheme });
+      document.documentElement.classList.toggle("dark", newTheme === "dark");
+    } else {
+      const newVal = !prefs[key];
+      setPreferences({ [key]: newVal });
+      setLocalPrefs({ ...prefs, [key]: newVal });
+    }
   };
 
   const saveName = () => {
@@ -118,12 +125,12 @@ const ProfileScreen = ({ onNavigate }: Props) => {
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 rounded-xl bg-sage/20 items-center justify-center"><Moon size={16} strokeWidth={1.8} className="text-teal" /></div>
                 <div>
-                  <p className="text-[13px] font-semibold text-foreground">Sleep Tracking</p>
-                  <p className="text-[10px] text-muted-foreground">{prefs.sleepTracking ? "Connected" : "Off"}</p>
+                  <p className="text-[13px] font-semibold text-foreground">Dark Mode</p>
+                  <p className="text-[10px] text-muted-foreground">{prefs.theme === "dark" ? "Enabled" : "Disabled"}</p>
                 </div>
               </div>
-              <button onClick={() => toggle("sleepTracking")} className={`w-11 h-6 rounded-full relative transition-colors duration-300 shadow-inner ${prefs.sleepTracking ? "bg-primary" : "bg-muted"}`}>
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-300 ${prefs.sleepTracking ? "right-1" : "left-1"}`} />
+              <button onClick={() => toggle("theme")} className={`w-11 h-6 rounded-full relative transition-colors duration-300 shadow-inner ${prefs.theme === "dark" ? "bg-primary" : "bg-muted"}`}>
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-300 ${prefs.theme === "dark" ? "right-1" : "left-1"}`} />
               </button>
             </div>
 

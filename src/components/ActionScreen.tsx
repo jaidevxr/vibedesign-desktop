@@ -143,7 +143,7 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
         <div className="absolute bottom-32 left-4 h-20 w-20 rounded-full bg-sage/15 blur-xl animate-float" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col px-5 pb-4 pt-14">
+      <div className="relative z-10 flex flex-1 flex-col px-4 sm:px-5 pb-3 sm:pb-4 pt-10 sm:pt-14">
         {/* Header */}
         <div className="mb-3 animate-fade-up flex items-center justify-between">
           <button onClick={onBack} className="glass-subtle inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-all duration-300 active:scale-95 hover:bg-white/50">
