@@ -25,7 +25,7 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
   const [sessionStart] = useState(Date.now());
   const [elapsed, setElapsed] = useState(0);
   const chatEndRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const totalWordCount = useRef(0);
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<any>(null);
@@ -86,6 +86,11 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
         try { recognitionRef.current.stop(); } catch (e) {}
       }
       setIsListening(false);
+      // Automatically send the message when the user manually turns off the microphone
+      const finalInput = inputRef.current?.value || input;
+      if (finalInput.trim() && !isStreaming) {
+        setTimeout(() => sendMessage(finalInput), 50);
+      }
       return;
     }
 
@@ -272,15 +277,30 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
               >
                 <Mic size={18} strokeWidth={2} />
               </button>
-              <input
+              <textarea
                 ref={inputRef}
-                type="text"
+                rows={1}
                 placeholder={isListening ? "Listening to you..." : "Type your thoughts..."}
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  // Auto-expand height up to a max
+                  e.target.style.height = 'auto';
+                  e.target.style.height = Math.min(e.target.scrollHeight, 100) + 'px';
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage(input);
+                    // Reset height after send
+                    if (inputRef.current) {
+                      inputRef.current.style.height = 'auto';
+                    }
+                  }
+                }}
                 disabled={isStreaming}
-                className="flex-1 bg-transparent border-none outline-none text-[12px] text-foreground placeholder:text-muted-foreground/50 px-3 py-2 disabled:opacity-50"
+                className="flex-1 bg-transparent border-none outline-none text-[12px] text-foreground placeholder:text-muted-foreground/50 px-3 py-2 disabled:opacity-50 resize-none max-h-[100px] overflow-y-auto block"
+                style={{ lineHeight: "1.5", minHeight: "36px" }}
               />
               <button
                 onClick={() => sendMessage(input)}
