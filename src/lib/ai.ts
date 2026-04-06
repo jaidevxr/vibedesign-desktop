@@ -128,11 +128,11 @@ export async function quickChat(prompt: string): Promise<string> {
       body: JSON.stringify({
         model: GROQ_MODEL,
         messages: [
-          { role: "system", content: "You are a concise wellness coach. Respond in 2-3 bullet points max." },
+          { role: "system", content: "You are a concise wellness coach. Output exactly 3 separate lines. Each line MUST start with an emoji and be a short, encouraging wellness takeaway related to the user's session. Do not output any introductory or concluding text. No markdown lists." },
           { role: "user", content: prompt },
         ],
-        temperature: 0.7,
-        max_tokens: 256,
+        temperature: 0.6,
+        max_tokens: 150,
       }),
     });
 
