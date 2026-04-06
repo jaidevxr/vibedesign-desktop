@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import BottomNav from "./BottomNav";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, BarChart, Bar, PieChart, Pie, Cell } from "recharts";
 import { getDailyEnergyHistory, getMoodDistribution, getCurrentStreak, getTotalSessionCount, getTotalMinutes, getSessions } from "@/lib/store";
+import { Flame, Target, Clock, BarChart3 } from "lucide-react";
 
 interface Props {
   onNavigate: (screen: "dashboard" | "stats" | "meditate" | "profile") => void;
@@ -19,7 +20,6 @@ const StatsScreen = ({ onNavigate }: Props) => {
   const totalSessions = getTotalSessionCount();
   const totalMinutes = getTotalMinutes();
 
-  // Session data for bar chart (last 7 days)
   const sessionChartData = useMemo(() => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const result: { day: string; count: number }[] = [];
@@ -43,11 +43,7 @@ const StatsScreen = ({ onNavigate }: Props) => {
       if (d.score > highest.score) highest = d;
       if (d.score < lowest.score) lowest = d;
     });
-    return {
-      highest: highest.score, highDay: highest.day,
-      lowest: lowest.score, lowDay: lowest.day,
-      avg: Math.round(sum / energyData.length),
-    };
+    return { highest: highest.score, highDay: highest.day, lowest: lowest.score, lowDay: lowest.day, avg: Math.round(sum / energyData.length) };
   }, [energyData]);
 
   const hasData = sessions.length > 0 || moodData.length > 0;
@@ -65,16 +61,10 @@ const StatsScreen = ({ onNavigate }: Props) => {
           <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">Your Trends</h1>
         </div>
 
-        {/* Tab Switcher */}
+        {/* Tabs */}
         <div className="glass-strong flex rounded-2xl p-1.5 mb-5 animate-fade-up shrink-0" style={{ animationDelay: "0.1s" }}>
           {(["energy", "sessions", "mood"] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold transition-all duration-300 ${
-                activeTab === tab ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:bg-white/10"
-              }`}
-            >
+            <button key={tab} onClick={() => setActiveTab(tab)} className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-semibold transition-all duration-300 ${activeTab === tab ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:bg-white/10"}`}>
               <span className="capitalize">{tab}</span>
             </button>
           ))}
@@ -82,36 +72,26 @@ const StatsScreen = ({ onNavigate }: Props) => {
 
         {!hasData ? (
           <div className="glass-strong rounded-[1.75rem] p-8 text-center flex-1 flex flex-col items-center justify-center animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <span className="text-4xl mb-4">📊</span>
+            <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
+              <BarChart3 size={28} strokeWidth={1.5} className="text-primary" />
+            </div>
             <h2 className="font-heading text-lg text-foreground mb-2">No Data Yet</h2>
-            <p className="text-[11px] text-muted-foreground max-w-[220px]">
-              Complete your first session to see your stats come alive here!
-            </p>
+            <p className="text-[11px] text-muted-foreground max-w-[220px]">Complete your first session to see your stats come alive here!</p>
           </div>
         ) : (
           <>
-            {/* Chart */}
             <div className="glass-strong rounded-[1.75rem] p-5 mb-5 animate-fade-up flex flex-col" style={{ animationDelay: "0.2s" }}>
               <div className="flex items-center justify-between mb-2">
-                <h2 className="text-sm font-semibold text-foreground">
-                  {activeTab === "energy" ? "Energy Score" : activeTab === "sessions" ? "Sessions" : "Mood Balance"}
-                </h2>
+                <h2 className="text-sm font-semibold text-foreground">{activeTab === "energy" ? "Energy Score" : activeTab === "sessions" ? "Sessions" : "Mood Balance"}</h2>
                 <span className="text-[10px] text-primary font-medium bg-primary/10 rounded-full px-2 py-0.5">Last 7 Days</span>
               </div>
-              <p className="text-[11px] text-muted-foreground mb-4">
-                {activeTab === "energy" ? "Your calculated wellness energy." : activeTab === "sessions" ? "Daily session frequency." : "Distribution of your mood check-ins."}
-              </p>
+              <p className="text-[11px] text-muted-foreground mb-4">{activeTab === "energy" ? "Your calculated wellness energy." : activeTab === "sessions" ? "Daily session frequency." : "Distribution of your mood check-ins."}</p>
 
               <div className="w-full h-[180px]">
                 {activeTab === "energy" && (
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={energyData} margin={{ top: 5, right: 0, left: -20, bottom: 0 }}>
-                      <defs>
-                        <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
-                        </linearGradient>
-                      </defs>
+                      <defs><linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} /><stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} /></linearGradient></defs>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" opacity={0.5} />
                       <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} dy={8} />
                       <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} domain={[0, 100]} />
@@ -120,26 +100,22 @@ const StatsScreen = ({ onNavigate }: Props) => {
                     </AreaChart>
                   </ResponsiveContainer>
                 )}
-
                 {activeTab === "sessions" && (
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={sessionChartData} margin={{ top: 5, right: 0, left: -20, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" opacity={0.5} />
                       <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} dy={8} />
                       <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} />
-                      <Tooltip contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 4px 20px rgba(0,0,0,0.08)", backgroundColor: "rgba(255,255,255,0.95)", fontSize: "11px" }} />
+                      <Tooltip contentStyle={{ borderRadius: "12px", border: "none", fontSize: "11px" }} />
                       <Bar dataKey="count" fill="hsl(var(--primary))" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 )}
-
                 {activeTab === "mood" && moodData.length > 0 && (
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                      <Pie data={moodData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={4} dataKey="value" nameKey="name" label={({ emoji, percent }) => `${emoji} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
-                        {moodData.map((_, index) => (
-                          <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                        ))}
+                      <Pie data={moodData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={4} dataKey="value" nameKey="name" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
+                        {moodData.map((_, index) => (<Cell key={index} fill={COLORS[index % COLORS.length]} />))}
                       </Pie>
                       <Tooltip contentStyle={{ borderRadius: "12px", border: "none", fontSize: "11px" }} />
                     </PieChart>
@@ -149,35 +125,29 @@ const StatsScreen = ({ onNavigate }: Props) => {
 
               {activeTab === "energy" && (
                 <div className="mt-4 pt-3 border-t border-border/50 flex justify-between items-center text-center">
-                  <div>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">Highest</p>
-                    <p className="text-sm font-bold text-foreground">{energyStats.highest} <span className="text-[9px] font-normal text-muted-foreground">{energyStats.highDay}</span></p>
-                  </div>
+                  <div><p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">Highest</p><p className="text-sm font-bold text-foreground">{energyStats.highest} <span className="text-[9px] font-normal text-muted-foreground">{energyStats.highDay}</span></p></div>
                   <div className="w-[1px] h-6 bg-border/50" />
-                  <div>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">Average</p>
-                    <p className="text-sm font-bold text-foreground">{energyStats.avg}</p>
-                  </div>
+                  <div><p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">Average</p><p className="text-sm font-bold text-foreground">{energyStats.avg}</p></div>
                   <div className="w-[1px] h-6 bg-border/50" />
-                  <div>
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">Lowest</p>
-                    <p className="text-sm font-bold text-foreground">{energyStats.lowest} <span className="text-[9px] font-normal text-muted-foreground">{energyStats.lowDay}</span></p>
-                  </div>
+                  <div><p className="text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">Lowest</p><p className="text-sm font-bold text-foreground">{energyStats.lowest} <span className="text-[9px] font-normal text-muted-foreground">{energyStats.lowDay}</span></p></div>
                 </div>
               )}
             </div>
 
             {/* Summary Cards */}
             <div className="grid grid-cols-3 gap-2.5 mb-6 animate-fade-up" style={{ animationDelay: "0.3s" }}>
-              <div className="glass rounded-2xl p-3 text-center">
+              <div className="glass rounded-2xl p-3 text-center flex flex-col items-center gap-1">
+                <Flame size={18} className="text-accent" />
                 <p className="text-lg font-bold text-foreground">{streak}</p>
-                <p className="text-[9px] text-muted-foreground uppercase tracking-wider">🔥 Streak</p>
+                <p className="text-[9px] text-muted-foreground uppercase tracking-wider">Streak</p>
               </div>
-              <div className="glass rounded-2xl p-3 text-center">
+              <div className="glass rounded-2xl p-3 text-center flex flex-col items-center gap-1">
+                <Target size={18} className="text-primary" />
                 <p className="text-lg font-bold text-foreground">{totalSessions}</p>
                 <p className="text-[9px] text-muted-foreground uppercase tracking-wider">Sessions</p>
               </div>
-              <div className="glass rounded-2xl p-3 text-center">
+              <div className="glass rounded-2xl p-3 text-center flex flex-col items-center gap-1">
+                <Clock size={18} className="text-teal" />
                 <p className="text-lg font-bold text-foreground">{totalMinutes}</p>
                 <p className="text-[9px] text-muted-foreground uppercase tracking-wider">Minutes</p>
               </div>

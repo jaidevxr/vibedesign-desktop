@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCurrentStreak } from "@/lib/store";
 import { quickChat } from "@/lib/ai";
+import { Sparkles, MessageCircle, Wind, Home } from "lucide-react";
 
 interface Props {
   onReset: () => void;
@@ -19,14 +20,12 @@ const ConfirmationScreen = ({ onReset, sessionData }: Props) => {
   const wordCount = sessionData?.wordCount || 0;
   const sessionType = sessionData?.type || "chat";
 
-  // Generate AI takeaways
   useEffect(() => {
     const fetchTakeaways = async () => {
       setLoadingTakeaways(true);
-      const prompt = sessionType === "chat" 
+      const prompt = sessionType === "chat"
         ? `The user just finished a ${durationStr} minute AI therapy chat session where they typed ${wordCount} words. Give 3 very short wellness takeaways (1 line each, with an emoji at start). Be encouraging and specific to their session length.`
         : `The user just completed a ${durationStr} minute breathing/meditation exercise. Give 3 very short wellness takeaways (1 line each, with an emoji at start). Celebrate their practice.`;
-      
       const response = await quickChat(prompt);
       if (response) {
         const lines = response.split("\n").filter((l) => l.trim().length > 5).slice(0, 3);
@@ -58,8 +57,8 @@ const ConfirmationScreen = ({ onReset, sessionData }: Props) => {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="h-24 w-24 rounded-full bg-primary/10 animate-breathe" />
             </div>
-            <div className="relative flex h-20 w-20 mx-auto items-center justify-center rounded-full glass-strong">
-              <span className="text-4xl">✨</span>
+            <div className="relative flex h-20 w-20 mx-auto items-center justify-center rounded-full glass-strong shadow-xl">
+              <Sparkles size={32} strokeWidth={1.5} className="text-primary" />
             </div>
           </div>
           <h1 className="font-heading text-[2rem] text-foreground leading-tight">Session Complete</h1>
@@ -68,16 +67,18 @@ const ConfirmationScreen = ({ onReset, sessionData }: Props) => {
           </p>
         </div>
 
-        {/* Streak Card */}
+        {/* Streak */}
         <div className="glass-strong rounded-[1.75rem] p-6 mb-4 animate-fade-up" style={{ animationDelay: "0.15s" }}>
           <div className="flex items-center justify-between mb-4">
             <p className="text-[10px] font-semibold tracking-wider uppercase text-muted-foreground/70">Progress Streak</p>
-            <span className="text-[10px] font-bold text-primary bg-primary/10 rounded-full px-2 py-0.5">🔥 {streak} {streak === 1 ? "day" : "days"}</span>
+            <span className="text-[10px] font-bold text-primary bg-primary/10 rounded-full px-2.5 py-0.5 flex items-center gap-1">
+              <span className="text-xs">🔥</span> {streak} {streak === 1 ? "day" : "days"}
+            </span>
           </div>
           <div className="flex items-center justify-between gap-1.5">
             {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
               <div key={i} className="flex flex-col items-center gap-1.5">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-xl text-[11px] font-semibold transition-all ${i < Math.min(streak, 7) ? "bg-primary text-primary-foreground shadow-sm" : "glass-subtle text-muted-foreground/40"}`}>
+                <div className={`flex h-10 w-10 items-center justify-center rounded-xl text-[11px] font-semibold transition-all duration-300 ${i < Math.min(streak, 7) ? "bg-primary text-primary-foreground shadow-sm" : "glass-subtle text-muted-foreground/40"}`}>
                   {i < Math.min(streak, 7) ? "✓" : d}
                 </div>
                 <span className="text-[8px] text-muted-foreground/50">{d}</span>
@@ -106,8 +107,8 @@ const ConfirmationScreen = ({ onReset, sessionData }: Props) => {
               </>
             )}
             <div className="w-[1px] h-8 bg-border/50" />
-            <div className="text-center">
-              <p className="text-lg font-bold text-foreground">{sessionType === "chat" ? "🎙️" : "🧘"}</p>
+            <div className="text-center flex flex-col items-center">
+              {sessionType === "chat" ? <MessageCircle size={18} className="text-primary mb-0.5" /> : <Wind size={18} className="text-primary mb-0.5" />}
               <p className="text-[9px] text-muted-foreground">{sessionType === "chat" ? "AI Chat" : "Meditation"}</p>
             </div>
           </div>
@@ -115,17 +116,18 @@ const ConfirmationScreen = ({ onReset, sessionData }: Props) => {
 
         {/* AI Takeaways */}
         <div className="glass-strong rounded-[1.75rem] p-5 mb-4 animate-fade-up" style={{ animationDelay: "0.35s" }}>
-          <p className="mb-3 text-[10px] font-semibold tracking-wider uppercase text-muted-foreground/70">AI-Powered Takeaways</p>
+          <div className="flex items-center gap-2 mb-3">
+            <Sparkles size={12} className="text-primary" />
+            <p className="text-[10px] font-semibold tracking-wider uppercase text-muted-foreground/70">AI-Powered Takeaways</p>
+          </div>
           <div className="space-y-2.5">
             {loadingTakeaways ? (
-              <div className="flex flex-col gap-2">
-                {[0, 1, 2].map((i) => (
-                  <div key={i} className="glass-subtle rounded-xl px-4 py-3 h-10 animate-shimmer" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 100%)", backgroundSize: "200% 100%", animationDelay: `${i * 0.2}s` }} />
-                ))}
-              </div>
+              [0, 1, 2].map((i) => (
+                <div key={i} className="glass-subtle rounded-xl px-4 py-3 h-10 animate-shimmer" style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.3) 100%)", backgroundSize: "200% 100%", animationDelay: `${i * 0.2}s` }} />
+              ))
             ) : (
               takeaways.map((t, i) => (
-                <div key={i} className="glass-subtle flex items-start gap-3 rounded-xl px-4 py-3">
+                <div key={i} className="glass-subtle flex items-start gap-3 rounded-xl px-4 py-3 animate-fade-up" style={{ animationDelay: `${0.4 + i * 0.1}s` }}>
                   <p className="text-[12px] text-foreground/75 leading-relaxed">{t}</p>
                 </div>
               ))
@@ -135,7 +137,8 @@ const ConfirmationScreen = ({ onReset, sessionData }: Props) => {
 
         {/* CTA */}
         <div className="mt-auto space-y-3 animate-fade-up" style={{ animationDelay: "0.5s" }}>
-          <button onClick={onReset} className="w-full rounded-2xl bg-primary py-4 text-sm font-semibold text-primary-foreground transition-all active:scale-[0.97]">
+          <button onClick={onReset} className="w-full rounded-2xl bg-primary py-4 text-sm font-semibold text-primary-foreground transition-all duration-300 active:scale-[0.97] hover:shadow-lg flex items-center justify-center gap-2">
+            <Home size={16} />
             Back to Home
           </button>
         </div>
