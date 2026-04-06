@@ -59,24 +59,23 @@ const DashboardScreen = ({ mood, onNavigate }: Props) => {
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-10 sm:pt-14 overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4 px-4 sm:px-5 shrink-0 animate-fade-up">
-          <div>
-            <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground/70">{greeting}</p>
-            <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">{userName}'s Dashboard</h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="glass-subtle flex items-center gap-1.5 rounded-full px-3 py-1.5">
-              <span className="text-xs">{moodLabel[mood] || "😌 Calm"}</span>
-            </div>
-            <button onClick={() => onNavigate("profile")} className="glass h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 active:scale-90 hover:shadow-md">
-              <User size={16} strokeWidth={2} className="text-foreground/70" />
-            </button>
-          </div>
-        </div>
-
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto px-4 sm:px-5 pb-2">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-4 shrink-0 animate-fade-up">
+            <div>
+              <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground/70">{greeting}</p>
+              <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">{userName}'s Dashboard</h1>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="glass-subtle flex items-center gap-1.5 rounded-full px-3 py-1.5">
+                <span className="text-xs">{moodLabel[mood] || "😌 Calm"}</span>
+              </div>
+              <button onClick={() => onNavigate("profile")} className="glass h-10 w-10 rounded-full flex items-center justify-center transition-all duration-300 active:scale-90 hover:shadow-md">
+                <User size={16} strokeWidth={2} className="text-foreground/70" />
+              </button>
+            </div>
+          </div>
           {/* Energy Score Card */}
           <div className="glass-strong rounded-[1.75rem] p-6 mb-5 animate-fade-up border-primary/10 shadow-xl shadow-primary/5 cursor-pointer transition-all duration-300 active:scale-[0.98] hover:shadow-2xl" onClick={() => onNavigate("stats")} style={{ animationDelay: "0.1s" }}>
           <div className="flex items-center justify-between mb-4">

@@ -56,13 +56,13 @@ const StatsScreen = ({ onNavigate }: Props) => {
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-10 sm:pt-14 overflow-hidden">
-        <div className="mb-6 px-4 sm:px-5 shrink-0 animate-fade-up">
-          <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground/70">Insights</p>
-          <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">Your Trends</h1>
-        </div>
-
         {/* Scrollable Container */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-5 pb-2">
+          {/* Header */}
+          <div className="mb-6 shrink-0 animate-fade-up">
+            <p className="text-[11px] font-medium tracking-wider uppercase text-muted-foreground/70">Insights</p>
+            <h1 className="font-heading text-[1.75rem] text-foreground leading-tight">Your Trends</h1>
+          </div>
           {/* Tabs */}
           <div className="glass-strong flex rounded-2xl p-1.5 mb-5 animate-fade-up shrink-0" style={{ animationDelay: "0.1s" }}>
           {(["energy", "sessions", "mood"] as const).map((tab) => (
