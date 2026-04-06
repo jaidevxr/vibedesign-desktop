@@ -35,14 +35,14 @@ const OnboardingScreen = ({ onComplete }: Props) => {
 
       <div className="relative z-10 flex flex-1 flex-col px-6 pb-8 pt-14 overflow-y-auto chat-scroll">
         {/* Progress dots */}
-        <div className="flex items-center justify-center gap-2 mb-8">
+        <div className="flex items-center justify-center gap-2 mb-8 shrink-0">
           {[0, 1, 2].map((i) => (
             <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === 0 ? "w-8 bg-white" : "w-1.5 bg-white/30"}`} />
           ))}
         </div>
 
         {/* Logo + Title */}
-        <div className="animate-fade-up text-center mb-auto" style={{ animationDelay: "0.1s" }}>
+        <div className="animate-fade-up text-center mb-auto shrink-0" style={{ animationDelay: "0.1s" }}>
           <div className="inline-flex items-center gap-2 mb-5">
             <div className="h-9 w-9 rounded-xl bg-white/15 backdrop-blur-md flex items-center justify-center border border-white/20">
               <Brain size={16} className="text-white" />
@@ -58,7 +58,7 @@ const OnboardingScreen = ({ onComplete }: Props) => {
         </div>
 
         {/* Mood Selector */}
-        <div className="rounded-[2rem] p-5 animate-fade-up my-6 bg-white/[0.08] backdrop-blur-[40px] backdrop-saturate-[1.5] border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] relative overflow-hidden" style={{ animationDelay: "0.3s" }}>
+        <div className="rounded-[2rem] p-5 animate-fade-up my-6 bg-white/[0.08] backdrop-blur-[40px] backdrop-saturate-[1.5] border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] relative overflow-hidden shrink-0" style={{ animationDelay: "0.3s" }}>
           <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
           <div className="relative z-10 grid grid-cols-3 gap-3">
             {moods.map((mood) => (
@@ -84,7 +84,7 @@ const OnboardingScreen = ({ onComplete }: Props) => {
         </div>
 
         {/* Motivational quote */}
-        <div className="rounded-[1.5rem] px-5 py-4 mb-8 animate-fade-up text-center bg-white/[0.05] backdrop-blur-[30px] backdrop-saturate-[1.5] border border-white/10 shadow-[0_4px_24px_0_rgba(0,0,0,0.2)]" style={{ animationDelay: "0.4s" }}>
+        <div className="rounded-[1.5rem] px-5 py-4 mb-8 animate-fade-up text-center bg-white/[0.05] backdrop-blur-[30px] backdrop-saturate-[1.5] border border-white/10 shadow-[0_4px_24px_0_rgba(0,0,0,0.2)] shrink-0" style={{ animationDelay: "0.4s" }}>
           <p className="text-[11px] italic text-white/70 leading-relaxed font-medium tracking-wide">"The greatest glory in living lies not in never falling, but in rising every time we fall."</p>
           <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mt-2">— Nelson Mandela</p>
         </div>
@@ -93,7 +93,7 @@ const OnboardingScreen = ({ onComplete }: Props) => {
         <button
           onClick={() => selected && onComplete(selected)}
           disabled={!selected}
-          className="animate-fade-up relative overflow-hidden w-full rounded-[1.25rem] bg-white/95 backdrop-blur-md py-4 text-[13px] font-bold uppercase tracking-wider text-[#0f1712] transition-all duration-300 disabled:opacity-40 active:scale-[0.98] shadow-[0_8px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] hover:bg-white"
+          className="animate-fade-up relative overflow-hidden w-full rounded-[1.25rem] bg-white/95 backdrop-blur-md py-4 text-[13px] font-bold uppercase tracking-wider text-[#0f1712] transition-all duration-300 disabled:opacity-40 active:scale-[0.98] shadow-[0_8px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] hover:bg-white shrink-0"
           style={{ animationDelay: "0.5s" }}
         >
           <span className="relative z-10 flex items-center justify-center gap-2">
@@ -102,7 +102,7 @@ const OnboardingScreen = ({ onComplete }: Props) => {
         </button>
 
         {/* Skip */}
-        <button className="mt-3 text-xs text-white/50 mx-auto animate-fade-up hover:text-white/70 transition-colors" style={{ animationDelay: "0.6s" }} onClick={() => onComplete("calm")}>
+        <button className="mt-3 text-xs text-white/50 mx-auto animate-fade-up hover:text-white/70 transition-colors shrink-0" style={{ animationDelay: "0.6s" }} onClick={() => onComplete("calm")}>
           Skip for now
         </button>
       </div>
