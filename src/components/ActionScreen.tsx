@@ -28,6 +28,7 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const totalWordCount = useRef(0);
   const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
 
   // Live timer
   useEffect(() => {
@@ -43,6 +44,11 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
   const sendMessage = async (text: string) => {
     if (!text.trim() || isStreaming) return;
     setError("");
+
+    if (isListening && recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) {}
+      setIsListening(false);
+    }
 
     const userMsg: ChatMessage = { role: "user", content: text.trim(), timestamp: Date.now() };
     totalWordCount.current += text.trim().split(/\s+/).length;
@@ -75,15 +81,28 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
   };
 
   const startListening = () => {
+    if (isListening) {
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch (e) {}
+      }
+      setIsListening(false);
+      return;
+    }
+
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       setError("Voice input isn't supported in your browser.");
       return;
     }
+    
     const recognition = new SpeechRecognition();
+    recognitionRef.current = recognition;
     recognition.lang = "en-US";
     recognition.interimResults = true;
     recognition.continuous = false;
+
+    // Capture whatever is currently typed so we can append to it instead of overwriting
+    const initialInput = input.trim();
 
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event: any) => {
@@ -91,12 +110,17 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
         .map((result: any) => result[0])
         .map((result: any) => result.transcript)
         .join("");
-      setInput(transcript);
+      
+      setInput(initialInput ? `${initialInput} ${transcript}` : transcript);
     };
     recognition.onerror = () => setIsListening(false);
     recognition.onend = () => setIsListening(false);
 
-    recognition.start();
+    try {
+      recognition.start();
+    } catch (e) {
+      setIsListening(false);
+    }
   };
 
   const handleFinishSession = () => {
