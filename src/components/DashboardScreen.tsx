@@ -58,9 +58,9 @@ const DashboardScreen = ({ mood, onNavigate }: Props) => {
         <div className="absolute bottom-20 right-0 h-32 w-32 rounded-full bg-primary/8 blur-2xl animate-breathe" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-16 sm:pt-14 overflow-hidden">
+      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 overflow-hidden">
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-5 pb-2">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-5 pt-6 sm:pt-8 pb-2">
           {/* Header */}
           <div className="flex items-center justify-between mb-4 shrink-0 animate-fade-up">
             <div>
