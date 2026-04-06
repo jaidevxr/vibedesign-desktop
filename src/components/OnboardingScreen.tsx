@@ -23,7 +23,8 @@ const OnboardingScreen = ({ onComplete }: Props) => {
       {/* Background */}
       <img src={bgNature} alt="" className="absolute inset-0 h-full w-full object-cover" width={1080} height={1920} />
       {/* Darker overlay gradient for text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a3a2a]/70 via-[#1a3a2a]/40 to-[#1a3a2a]/85" />
+      <div className="absolute inset-0 bg-[#0f1712]/40 backdrop-saturate-[1.2]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0f1712]/50 via-transparent to-[#0f1712]/80" />
 
       {/* Floating decorative orbs */}
       <div className="pointer-events-none absolute inset-0">
@@ -57,23 +58,24 @@ const OnboardingScreen = ({ onComplete }: Props) => {
         </div>
 
         {/* Mood Selector */}
-        <div className="rounded-3xl p-5 animate-fade-up my-6 bg-white/15 backdrop-blur-xl border border-white/20 shadow-2xl" style={{ animationDelay: "0.3s" }}>
-          <div className="grid grid-cols-3 gap-2.5">
+        <div className="rounded-[2rem] p-5 animate-fade-up my-6 bg-white/[0.08] backdrop-blur-[40px] backdrop-saturate-[1.5] border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] relative overflow-hidden" style={{ animationDelay: "0.3s" }}>
+          <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+          <div className="relative z-10 grid grid-cols-3 gap-3">
             {moods.map((mood) => (
               <button
                 key={mood.value}
                 onClick={() => setSelected(mood.value)}
-                className={`relative flex flex-col items-center gap-1.5 rounded-2xl py-4 px-2 transition-all duration-300 ${
+                className={`relative flex flex-col items-center gap-2 rounded-[1.25rem] py-4 px-2 transition-all duration-400 ease-out ${
                   selected === mood.value
-                    ? "bg-white/30 backdrop-blur-sm scale-[1.06] ring-2 ring-white/40 shadow-lg"
-                    : "hover:bg-white/10 active:scale-95"
+                    ? "bg-white/25 backdrop-blur-md scale-105 shadow-[0_4px_24px_rgba(0,0,0,0.2)] border border-white/30"
+                    : "hover:bg-white/10 active:scale-95 border border-transparent"
                 }`}
               >
                 <span className="text-[2rem] leading-none drop-shadow-sm">{mood.emoji}</span>
-                <span className={`text-[11px] font-medium ${selected === mood.value ? "text-white" : "text-white/70"}`}>{mood.label}</span>
+                <span className={`text-[11px] font-medium tracking-wide ${selected === mood.value ? "text-white" : "text-white/70"}`}>{mood.label}</span>
                 {selected === mood.value && (
-                  <div className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-white flex items-center justify-center shadow-md">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--forest))" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <div className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-white flex items-center justify-center shadow-lg transform transition-transform animate-scale-in">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--forest))" strokeWidth="3" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
                   </div>
                 )}
               </button>
@@ -82,19 +84,21 @@ const OnboardingScreen = ({ onComplete }: Props) => {
         </div>
 
         {/* Motivational quote */}
-        <div className="rounded-2xl px-4 py-3 mb-6 animate-fade-up text-center bg-white/10 backdrop-blur-sm border border-white/10" style={{ animationDelay: "0.4s" }}>
-          <p className="text-[11px] italic text-white/60">"The greatest glory in living lies not in never falling, but in rising every time we fall."</p>
-          <p className="text-[10px] text-white/40 mt-1">— Nelson Mandela</p>
+        <div className="rounded-[1.5rem] px-5 py-4 mb-8 animate-fade-up text-center bg-white/[0.05] backdrop-blur-[30px] backdrop-saturate-[1.5] border border-white/10 shadow-[0_4px_24px_0_rgba(0,0,0,0.2)]" style={{ animationDelay: "0.4s" }}>
+          <p className="text-[11px] italic text-white/70 leading-relaxed font-medium tracking-wide">"The greatest glory in living lies not in never falling, but in rising every time we fall."</p>
+          <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mt-2">— Nelson Mandela</p>
         </div>
 
         {/* CTA */}
         <button
           onClick={() => selected && onComplete(selected)}
           disabled={!selected}
-          className="animate-fade-up w-full rounded-2xl bg-white py-4 text-sm font-semibold text-[#1a3a2a] transition-all duration-300 disabled:opacity-30 active:scale-[0.97] shadow-xl hover:shadow-2xl"
+          className="animate-fade-up relative overflow-hidden w-full rounded-[1.25rem] bg-white/95 backdrop-blur-md py-4 text-[13px] font-bold uppercase tracking-wider text-[#0f1712] transition-all duration-300 disabled:opacity-40 active:scale-[0.98] shadow-[0_8px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_8px_30px_rgba(255,255,255,0.3)] hover:bg-white"
           style={{ animationDelay: "0.5s" }}
         >
-          Continue
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            Continue
+          </span>
         </button>
 
         {/* Skip */}
