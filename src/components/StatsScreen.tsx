@@ -55,7 +55,7 @@ const StatsScreen = ({ onNavigate }: Props) => {
         <div className="absolute top-1/2 right-0 h-40 w-40 rounded-full bg-sage/20 blur-2xl animate-float" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-10 sm:pt-14 overflow-hidden">
+      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-16 sm:pt-14 overflow-hidden">
         {/* Scrollable Container */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-5 pb-2">
           {/* Header */}

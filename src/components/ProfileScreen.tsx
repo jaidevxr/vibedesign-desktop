@@ -50,7 +50,7 @@ const ProfileScreen = ({ onNavigate }: Props) => {
         <div className="absolute bottom-40 left-0 h-40 w-40 rounded-full bg-primary/10 blur-2xl animate-breathe" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-10 sm:pt-14 overflow-hidden">
+      <div className="relative z-10 flex flex-1 flex-col pb-4 sm:pb-6 pt-16 sm:pt-14 overflow-hidden">
         {/* Scrollable Container */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-5 pb-2">
         {/* Avatar + Name */}
