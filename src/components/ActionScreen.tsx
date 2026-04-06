@@ -99,7 +99,7 @@ const ActionScreen = ({ onBack, onComplete, onNavigateMeditate }: Props) => {
     recognitionRef.current = recognition;
     recognition.lang = "en-US";
     recognition.interimResults = true;
-    recognition.continuous = false;
+    recognition.continuous = true; // Prevents the mic from stopping automatically on pauses
 
     // Capture whatever is currently typed so we can append to it instead of overwriting
     const initialInput = input.trim();
