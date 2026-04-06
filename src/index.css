@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 80 25% 97%;
+    --foreground: 150 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 150 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 20% 15%;
+
+    --primary: 152 35% 45%;
+    --primary-foreground: 80 25% 97%;
+
+    --secondary: 25 60% 92%;
+    --secondary-foreground: 150 20% 15%;
+
+    --muted: 80 15% 92%;
+    --muted-foreground: 150 10% 45%;
+
+    --accent: 18 70% 75%;
+    --accent-foreground: 150 20% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 80 15% 88%;
+    --input: 80 15% 88%;
+    --ring: 152 35% 45%;
+
+    --radius: 1rem;
+
+    --sage: 152 25% 60%;
+    --sage-light: 152 20% 90%;
+    --peach: 18 60% 85%;
+    --peach-deep: 18 50% 70%;
+    --sand: 38 40% 92%;
+    --teal: 175 30% 45%;
+    --forest: 150 30% 25%;
+
+    --font-heading: 'DM Serif Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 4px 30px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-subtle {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.03);
+  }
+
+  .gradient-calm {
+    background: linear-gradient(
+      165deg,
+      hsl(var(--sage-light)) 0%,
+      hsl(var(--peach) / 0.5) 50%,
+      hsl(var(--sand)) 100%
+    );
+  }
+
+  .gradient-forest {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--forest)) 0%,
+      hsl(152 25% 35%) 100%
+    );
+  }
+
+  .text-gradient-sage {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--teal)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out both;
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out both;
+  }
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out both;
+  }
+  .animate-pulse-soft {
+    animation: pulseSoft 3s ease-in-out infinite;
+  }
+  .animate-float {
+    animation: floatY 6s ease-in-out infinite;
+  }
+  .animate-float-slow {
+    animation: floatY 8s ease-in-out infinite;
+  }
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+  .animate-slide-in-left {
+    animation: slideInLeft 0.4s ease-out both;
+  }
+  .animate-slide-in-right {
+    animation: slideInRight 0.4s ease-out both;
+  }
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  .animate-typing-dot {
+    animation: typingDot 1.4s ease-in-out infinite;
+  }
+}
+
+.chat-scroll {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.chat-scroll::-webkit-scrollbar { display: none; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes pulseSoft {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.85; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 0.3; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px) translateY(8px); }
+  to { opacity: 1; transform: translateX(0) translateY(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(16px) translateY(8px); }
+  to { opacity: 1; transform: translateX(0) translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
